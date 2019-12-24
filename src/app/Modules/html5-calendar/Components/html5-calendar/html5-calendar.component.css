@@ -1,0 +1,50 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.calendar-container {
+    width: 100%;
+    height: 100%;
+    background-color: purple;
+}
+
+.calendar-header {
+    width: 100%;
+    height: 10%;
+    background-color: red;
+}
+
+.month-slider {
+    width: 100%;
+    height: 75%;
+}
+
+.week-header {
+    width: 100%;
+    height: 20%;
+    display: flex;
+}
+
+.day-of-week {
+    width: 14.28%;
+    text-align: center;
+}
+
+.calendar-body {
+    width: 100%;
+    height: 90%;
+    background-color: green;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.calendar-day {
+    width: 14.28%;
+    height: 20%;
+    background-color: blue;
+    border-width: 1.5px;
+    border-color: yellow;
+    border-style: solid;
+}
