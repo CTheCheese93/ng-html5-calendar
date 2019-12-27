@@ -1,0 +1,40 @@
+<div class="calendar-container">
+    <div class="calendar-header">
+        <div class="month-slider">
+            <span class="prev-month">
+                <input
+                    type="button"
+                    (click)="GoToPrevMonth()"
+                    value='Prev'
+                />
+            </span>
+            <span class="current-month">
+                {{ selectedMonthTitle }}
+            </span>
+            <span class="next-month">
+                <input
+                    type="button"
+                    (click)="GoToNextMonth()"
+                    value='Next'
+                />
+            </span>
+        </div>
+        <div class="week-header">
+            <div class="day-of-week">Sun</div>
+            <div class="day-of-week">Mon</div>
+            <div class="day-of-week">Tue</div>
+            <div class="day-of-week">Wed</div>
+            <div class="day-of-week">Thur</div>
+            <div class="day-of-week">Fri</div>
+            <div class="day-of-week">Sat</div>
+        </div>
+    </div>
+    <div class="calendar-body">
+        <div 
+            class="calendar-day"
+            *ngFor="let d of calendarDays"
+        >
+            {{ d.date() }}
+        </div>
+    </div>
+</div>

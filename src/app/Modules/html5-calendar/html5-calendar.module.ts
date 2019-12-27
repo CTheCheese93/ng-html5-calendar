@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Html5CalendarComponent } from './Components/html5-calendar/html5-calendar.component';
+import { Html5MonthlyCalendarComponent } from './Components/html5-monthly-calendar/html5-monthly-calendar.component';
 
 
 
 @NgModule({
-  declarations: [Html5CalendarComponent],
+  declarations: [Html5MonthlyCalendarComponent],
   imports: [
     CommonModule
   ],
   exports: [
-    Html5CalendarComponent
+    Html5MonthlyCalendarComponent
   ]
 })
 export class Html5CalendarModule { }

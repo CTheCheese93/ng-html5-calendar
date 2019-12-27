@@ -18,18 +18,20 @@
 
 .month-slider {
     width: 100%;
-    height: 75%;
+    height: 60%;
 }
 
 .week-header {
     width: 100%;
-    height: 20%;
+    height: 40%;
     display: flex;
 }
 
 .day-of-week {
     width: 14.28%;
+    height: 100%;
     text-align: center;
+    padding-bottom: 5px;
 }
 
 .calendar-body {
