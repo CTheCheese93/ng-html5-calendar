@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import * as Moment from 'moment';
 
 @Component({
-  selector: 'app-html5-monthly-calendar',
-  templateUrl: './html5-monthly-calendar.component.html',
-  styleUrls: ['./html5-monthly-calendar.component.css']
+  selector: 'ngh5-monthly-view',
+  templateUrl: './monthly-view.component.html',
+  styleUrls: ['./monthly-view.component.css']
 })
-export class Html5MonthlyCalendarComponent implements OnInit {
+export class MonthlyCalendarComponent implements OnInit {
   selectedMonth : Moment.Moment;
   selectedMonthTitle : String = '';
   calendarDays : Array<Moment.Moment> = [];
