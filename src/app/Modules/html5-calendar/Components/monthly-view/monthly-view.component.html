@@ -34,7 +34,13 @@
             class="calendar-day"
             *ngFor="let d of calendarDays"
         >
-            {{ d.date() }}
+            {{ d.date.date() }}
+            
+            <div
+                *ngFor="let e of d.events"
+            >
+                {{ e.title }}
+            </div>
         </div>
     </div>
 </div>

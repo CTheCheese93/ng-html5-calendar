@@ -16,6 +16,7 @@ export class AppComponent {
   }
   
   ngOnInit(){
-    
+    this.events = this._mes.events;
+    console.log(this.events);
   }
 }

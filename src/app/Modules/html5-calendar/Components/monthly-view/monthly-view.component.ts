@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Ngh5Event } from '../../../../Models/event'
 import * as Moment from 'moment';
 
 @Component({
@@ -7,9 +8,11 @@ import * as Moment from 'moment';
   styleUrls: ['./monthly-view.component.css']
 })
 export class MonthlyCalendarComponent implements OnInit {
+  @Input() events: Ngh5Event[];
+
   selectedMonth : Moment.Moment;
   selectedMonthTitle : String = '';
-  calendarDays : Array<Moment.Moment> = [];
+  calendarDays = [];
 
   constructor() { }
 
@@ -41,19 +44,40 @@ export class MonthlyCalendarComponent implements OnInit {
     // console.log(first_day_of_calendar);
     // console.log(last_day_of_calendar);
     // console.log(this.selectedMonth);
+    // let _date = this.events[0];
+    // let _today = Moment('2019-12-15T12:00');
+    // console.log(_date.startDate);
+    // console.log(_date.startDate.isSame(_today, 'day'))
+    console.log(this.calendarDays);
   }
 
-  private _PopulateCalendarDays(first_day_of_calendar: Moment.Moment, last_day_of_calendar: Moment.Moment) {
-    let dayDiff = last_day_of_calendar.diff(first_day_of_calendar, 'days');
+  private _PopulateCalendarDays(
+    first_day_of_calendar: Moment.Moment,
+    last_day_of_calendar: Moment.Moment)
+  {
+    // Empty calendar tiles before adding more
     this.calendarDays = [];
-    this.calendarDays.push(first_day_of_calendar);
+    let dayDiff = last_day_of_calendar.diff(first_day_of_calendar, 'days');
+
+    this.calendarDays.push({
+      date: first_day_of_calendar,
+      events: this.events.filter(e => e.startDate.isSame(first_day_of_calendar, 'day'))
+    });
+
+    // Populate the days up to the first day of the month
     for(var i = 1; i < dayDiff; i++)
     {
-      this.calendarDays.push(
-        first_day_of_calendar.clone().add(i, 'days')
-      );
+      let _day = first_day_of_calendar.clone().add(i, 'days')
+      this.calendarDays.push({
+        date: _day,
+        events:this.events.filter(e => e.startDate.isSame(_day, 'day'))
+      });
     }
-    this.calendarDays.push(last_day_of_calendar);
+    
+    this.calendarDays.push({
+      date: last_day_of_calendar,
+      events: this.events.filter(e => e.startDate.isSame(last_day_of_calendar, 'day'))
+    });
   }
 
   private _SetSelectedMonth(target_date: Moment.Moment) : void
