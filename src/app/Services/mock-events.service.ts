@@ -24,4 +24,13 @@ export class MockEventsService {
   ]
 
   constructor() { }
+
+  GetCalendarEventsBetween(startDate: Moment.Moment, endDate: Moment.Moment)
+  {
+    let _events = this.events.filter(e => {
+      return e.startDate.isBetween(startDate.startOf('day'), endDate.endOf('day'), 'day')
+    });
+
+    return _events;
+  }
 }

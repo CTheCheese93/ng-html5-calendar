@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Ngh5Event } from '../../../../Models/ngh5-event'
 import * as Moment from 'moment';
 import { CalendarDayGenerator } from 'src/app/Generators/calendar-day-generator';
+import { MockEventsService } from 'src/app/Services/mock-events.service';
 
 @Component({
   selector: 'ngh5-monthly-view',
@@ -10,20 +11,22 @@ import { CalendarDayGenerator } from 'src/app/Generators/calendar-day-generator'
 })
 export class MonthlyCalendarComponent implements OnInit {
   _calendarDayGenerator: CalendarDayGenerator;
+  _mockEventsService: MockEventsService;
 
-  @Input() events: Ngh5Event[];
+  events: Ngh5Event[];
+  @Input() anchorDate: Moment.Moment;
 
   selectedMonth : Moment.Moment;
   selectedMonthTitle : String = '';
   calendarDays = [];
 
-  constructor() {
+  constructor(mockEventsService: MockEventsService) {
+    this._mockEventsService = mockEventsService;
   }
 
   ngOnInit()
   {
-    this._calendarDayGenerator = new CalendarDayGenerator(this.events);
-    this._SetSelectedMonth(Moment("2019-12-15"));
+    this._SetSelectedMonth(this.anchorDate ? this.anchorDate : Moment());
   }
 
   private _SetSelectedMonth(target_date: Moment.Moment) : void
@@ -49,6 +52,9 @@ export class MonthlyCalendarComponent implements OnInit {
     let first_day_of_calendar = Moment(first_day_of_month).day(0);
     let last_day_of_calendar = Moment(first_day_of_calendar).add(34, 'days');
     
+    this.events = this._mockEventsService.GetCalendarEventsBetween(first_day_of_calendar, last_day_of_calendar);
+    this._calendarDayGenerator = new CalendarDayGenerator(this.events);
+
     this._PopulateCalendarDays(first_day_of_calendar, last_day_of_calendar);
 
     // console.log(today);
@@ -56,10 +62,10 @@ export class MonthlyCalendarComponent implements OnInit {
     // console.log(first_day_of_calendar);
     // console.log(last_day_of_calendar);
     // console.log(this.selectedMonth);
-    let _date = this.events[2];
-    let _today = Moment('2019-12-15T12:00');
-    console.log(_date.startDate);
-    console.log(_date.startDate.isSame(_today, 'day'))
+    // let _date = this.events[2];
+    // let _today = Moment('2019-12-15T12:00');
+    // console.log(_date.startDate);
+    // console.log(_date.startDate.isSame(_today, 'day'))
   }
 
   private _PopulateCalendarDays(

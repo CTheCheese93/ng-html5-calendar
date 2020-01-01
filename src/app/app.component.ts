@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { MockEventsService } from './Services/mock-events.service';
-
+import * as Moment from 'moment';
 
 @Component({
   selector: 'app-root',
@@ -8,15 +7,6 @@ import { MockEventsService } from './Services/mock-events.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  _mes: MockEventsService;
-  events;
+  anchorDate = Moment();
 
-  constructor(mes: MockEventsService){
-    this._mes = mes;
-  }
-  
-  ngOnInit(){
-    this.events = this._mes.events;
-    console.log(this.events);
-  }
 }
