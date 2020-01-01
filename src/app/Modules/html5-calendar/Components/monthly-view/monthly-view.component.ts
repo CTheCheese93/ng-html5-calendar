@@ -3,6 +3,9 @@ import { Ngh5Event } from '../../../../Models/ngh5-event'
 import * as Moment from 'moment';
 import { CalendarDayGenerator } from 'src/app/Generators/calendar-day-generator';
 import { MockEventsService } from 'src/app/Services/mock-events.service';
+import { CalendarDay } from 'src/app/Models/calendar-day';
+import { MatDialog } from '@angular/material';
+import { AddEventDialogComponent } from 'src/app/Modules/ngh5-shared/Components/add-event-dialog/add-event-dialog.component';
 
 @Component({
   selector: 'ngh5-monthly-view',
@@ -20,7 +23,8 @@ export class MonthlyCalendarComponent implements OnInit {
   selectedMonthTitle : String = '';
   calendarDays = [];
 
-  constructor(mockEventsService: MockEventsService) {
+  constructor(mockEventsService: MockEventsService,
+              public dialog: MatDialog) {
     this._mockEventsService = mockEventsService;
   }
 
@@ -44,6 +48,13 @@ export class MonthlyCalendarComponent implements OnInit {
   public GoToPrevMonth(): void
   {
     this._SetSelectedMonth(this.selectedMonth.clone().subtract(1, 'months'))
+  }
+
+  public OnDayTileClick(calendarDay: CalendarDay){
+    const dialogRef = this.dialog.open(AddEventDialogComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(calendarDay.date.date())
+    });
   }
 
   private _BuildCalendar(today: Moment.Moment)

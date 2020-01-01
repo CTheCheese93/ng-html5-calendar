@@ -34,7 +34,7 @@
             class="calendar-day"
             *ngFor="let d of calendarDays"
         >
-            <ngh5-monthly-day-tile [calendarDay]="d"></ngh5-monthly-day-tile>
+            <ngh5-monthly-day-tile [calendarDay]="d" (click)="OnDayTileClick(d)"></ngh5-monthly-day-tile>
         </div>
     </div>
 </div>
