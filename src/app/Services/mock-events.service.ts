@@ -18,8 +18,8 @@ export class MockEventsService {
     },
     {
       title: 'Event Title 3',
-      startDate: Moment('2020-12-15T10:00'),
-      endDate: Moment('2020-12-20T13:00')
+      startDate: Moment('2020-01-15T10:00'),
+      endDate: Moment('2020-01-20T13:00')
     }
   ]
 

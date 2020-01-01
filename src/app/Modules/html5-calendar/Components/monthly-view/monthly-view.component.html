@@ -34,13 +34,7 @@
             class="calendar-day"
             *ngFor="let d of calendarDays"
         >
-            {{ d.date.date() }}
-            
-            <div
-                *ngFor="let e of d.events"
-            >
-                {{ e.title }}
-            </div>
+            <ngh5-monthly-day-tile [calendarDay]="d"></ngh5-monthly-day-tile>
         </div>
     </div>
 </div>

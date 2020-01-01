@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Ngh5Event } from '../../../../Models/event'
+import { Ngh5Event } from '../../../../Models/ngh5-event'
 import * as Moment from 'moment';
+import { CalendarDayGenerator } from 'src/app/Generators/calendar-day-generator';
 
 @Component({
   selector: 'ngh5-monthly-view',
@@ -8,17 +9,28 @@ import * as Moment from 'moment';
   styleUrls: ['./monthly-view.component.css']
 })
 export class MonthlyCalendarComponent implements OnInit {
+  _calendarDayGenerator: CalendarDayGenerator;
+
   @Input() events: Ngh5Event[];
 
   selectedMonth : Moment.Moment;
   selectedMonthTitle : String = '';
   calendarDays = [];
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit()
   {
+    this._calendarDayGenerator = new CalendarDayGenerator(this.events);
     this._SetSelectedMonth(Moment("2019-12-15"));
+  }
+
+  private _SetSelectedMonth(target_date: Moment.Moment) : void
+  {
+    this.selectedMonth = target_date;
+    this.selectedMonthTitle = Moment(target_date).format('MMMM, YYYY').toString();
+    this._BuildCalendar(this.selectedMonth);
   }
 
   public GoToNextMonth() : void
@@ -44,11 +56,10 @@ export class MonthlyCalendarComponent implements OnInit {
     // console.log(first_day_of_calendar);
     // console.log(last_day_of_calendar);
     // console.log(this.selectedMonth);
-    // let _date = this.events[0];
-    // let _today = Moment('2019-12-15T12:00');
-    // console.log(_date.startDate);
-    // console.log(_date.startDate.isSame(_today, 'day'))
-    console.log(this.calendarDays);
+    let _date = this.events[2];
+    let _today = Moment('2019-12-15T12:00');
+    console.log(_date.startDate);
+    console.log(_date.startDate.isSame(_today, 'day'))
   }
 
   private _PopulateCalendarDays(
@@ -59,31 +70,19 @@ export class MonthlyCalendarComponent implements OnInit {
     this.calendarDays = [];
     let dayDiff = last_day_of_calendar.diff(first_day_of_calendar, 'days');
 
-    this.calendarDays.push({
-      date: first_day_of_calendar,
-      events: this.events.filter(e => e.startDate.isSame(first_day_of_calendar, 'day'))
-    });
+    this.calendarDays.push(
+      this._calendarDayGenerator.GenerateCalendarDay(first_day_of_calendar));
 
     // Populate the days up to the first day of the month
     for(var i = 1; i < dayDiff; i++)
     {
       let _day = first_day_of_calendar.clone().add(i, 'days')
-      this.calendarDays.push({
-        date: _day,
-        events:this.events.filter(e => e.startDate.isSame(_day, 'day'))
-      });
+      this.calendarDays.push(
+        this._calendarDayGenerator.GenerateCalendarDay(_day));
     }
     
-    this.calendarDays.push({
-      date: last_day_of_calendar,
-      events: this.events.filter(e => e.startDate.isSame(last_day_of_calendar, 'day'))
-    });
-  }
-
-  private _SetSelectedMonth(target_date: Moment.Moment) : void
-  {
-    this.selectedMonth = target_date;
-    this.selectedMonthTitle = Moment(target_date).format('MMMM, YYYY').toString();
-    this._BuildCalendar(this.selectedMonth);
+    this.calendarDays.push(
+      this._calendarDayGenerator.GenerateCalendarDay(last_day_of_calendar)
+    );
   }
 }
